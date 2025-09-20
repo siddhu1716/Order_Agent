@@ -1,0 +1,281 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Vegetarian Pasta",
+      "readyInMinutes": 30,
+      "servings": 4,
+      "sourceUrl": "https://example.com/recipe1",
+      "image": "https://example.com/image1.jpg",
+      "summary": "A delicious vegetarian pasta dish with fresh vegetables",
+      "instructions": "1. Boil pasta\n2. Sauté vegetables\n3. Combine and serve",
+      "ingredients": [
+        {"name": "pasta", "amount": 200, "unit": "g"},
+        {"name": "tomatoes", "amount": 2, "unit": "pieces"},
+        {"name": "onion", "amount": 1, "unit": "medium"},
+        {"name": "garlic", "amount": 2, "unit": "cloves"}
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Chicken Curry",
+      "readyInMinutes": 45,
+      "servings": 6,
+      "sourceUrl": "https://example.com/recipe2",
+      "image": "https://example.com/image2.jpg",
+      "summary": "Spicy chicken curry with aromatic spices",
+      "instructions": "1. Marinate chicken\n2. Cook spices\n3. Add chicken and simmer",
+      "ingredients": [
+        {"name": "chicken", "amount": 500, "unit": "g"},
+        {"name": "onion", "amount": 2, "unit": "medium"},
+        {"name": "tomatoes", "amount": 3, "unit": "pieces"},
+        {"name": "curry powder", "amount": 2, "unit": "tbsp"}
+      ]
+    }
+  ],
+  "flights": [
+    {
+      "id": "flight_1",
+      "airline": "Delta",
+      "flight_number": "DL123",
+      "departure": "2024-01-20T08:00:00Z",
+      "arrival": "2024-01-20T11:30:00Z",
+      "price": 350.0,
+      "currency": "USD",
+      "duration": "3h 30m",
+      "stops": 0,
+      "aircraft": "Boeing 737"
+    },
+    {
+      "id": "flight_2",
+      "airline": "American",
+      "flight_number": "AA456",
+      "departure": "2024-01-20T14:00:00Z",
+      "arrival": "2024-01-20T17:30:00Z",
+      "price": 380.0,
+      "currency": "USD",
+      "duration": "3h 30m",
+      "stops": 0,
+      "aircraft": "Airbus A320"
+    }
+  ],
+  "hotels": [
+    {
+      "id": "hotel_1",
+      "name": "Marriott Downtown",
+      "price": 200.0,
+      "currency": "USD",
+      "rating": 4.5,
+      "amenities": ["WiFi", "Pool", "Gym", "Restaurant", "Spa"],
+      "location": "Downtown",
+      "address": "123 Main St, Downtown",
+      "check_in": "15:00",
+      "check_out": "11:00"
+    },
+    {
+      "id": "hotel_2",
+      "name": "Hilton Garden Inn",
+      "price": 150.0,
+      "currency": "USD",
+      "rating": 4.2,
+      "amenities": ["WiFi", "Restaurant", "Business Center"],
+      "location": "Airport",
+      "address": "456 Airport Blvd, Airport",
+      "check_in": "15:00",
+      "check_out": "11:00"
+    }
+  ],
+  "products": [
+    {
+      "id": "product_1",
+      "name": "Wireless Headphones",
+      "brand": "Sony",
+      "price": 89.99,
+      "currency": "USD",
+      "rating": 4.5,
+      "reviews": 1250,
+      "category": "Electronics",
+      "description": "High-quality wireless headphones with noise cancellation",
+      "features": ["Bluetooth", "Noise Cancellation", "30h Battery"],
+      "availability": true,
+      "vendor": "Amazon"
+    },
+    {
+      "id": "product_2",
+      "name": "Gaming Laptop",
+      "brand": "ASUS",
+      "price": 1299.99,
+      "currency": "USD",
+      "rating": 4.3,
+      "reviews": 890,
+      "category": "Electronics",
+      "description": "High-performance gaming laptop with RTX graphics",
+      "features": ["RTX 4060", "16GB RAM", "1TB SSD"],
+      "availability": true,
+      "vendor": "Best Buy"
+    }
+  ],
+  "quick_commerce_products": [
+    {
+      "name": "Fresh Tomatoes",
+      "price": 25.0,
+      "currency": "INR",
+      "rating": 4.5,
+      "availability": true,
+      "platform": "zepto",
+      "image_url": "https://example.com/tomatoes.jpg",
+      "product_url": "https://zepto.com/product/123",
+      "delivery_time": "10 min",
+      "category": "Vegetables"
+    },
+    {
+      "name": "Organic Milk 1L",
+      "price": 60.0,
+      "currency": "INR",
+      "rating": 4.3,
+      "availability": true,
+      "platform": "blinkit",
+      "image_url": "https://example.com/milk.jpg",
+      "product_url": "https://blinkit.com/product/456",
+      "delivery_time": "15 min",
+      "category": "Dairy"
+    },
+    {
+      "name": "Whole Wheat Bread",
+      "price": 35.0,
+      "currency": "INR",
+      "rating": 4.2,
+      "availability": true,
+      "platform": "swiggy_instamart",
+      "image_url": "https://example.com/bread.jpg",
+      "product_url": "https://instamart.swiggy.com/product/789",
+      "delivery_time": "20 min",
+      "category": "Bakery"
+    }
+  ],
+  "orders": [
+    {
+      "order_id": "order_zepto_123",
+      "platform": "zepto",
+      "items": [
+        {"name": "Tomatoes", "quantity": 2, "price": 25.0},
+        {"name": "Milk", "quantity": 1, "price": 60.0}
+      ],
+      "total_amount": 110.0,
+      "currency": "INR",
+      "status": "placed",
+      "estimated_delivery": "2024-01-15T10:30:00Z",
+      "tracking_url": "https://zepto.com/track/123",
+      "user_id": "test_user_123",
+      "delivery_person": {
+        "name": "Rahul Kumar",
+        "phone": "+91 98765 43210",
+        "rating": 4.8
+      }
+    },
+    {
+      "order_id": "order_blinkit_456",
+      "platform": "blinkit",
+      "items": [
+        {"name": "Rice", "quantity": 1, "price": 80.0},
+        {"name": "Dal", "quantity": 1, "price": 45.0}
+      ],
+      "total_amount": 125.0,
+      "currency": "INR",
+      "status": "confirmed",
+      "estimated_delivery": "2024-01-15T12:00:00Z",
+      "tracking_url": "https://blinkit.com/track/456",
+      "user_id": "test_user_123"
+    }
+  ],
+  "meal_plans": [
+    {
+      "id": "meal_plan_1",
+      "calories": 2000,
+      "diet": "balanced",
+      "time_frame": "day",
+      "meals": [
+        {
+          "id": 1,
+          "title": "Breakfast",
+          "readyInMinutes": 15,
+          "calories": 400,
+          "ingredients": ["eggs", "bread", "butter"]
+        },
+        {
+          "id": 2,
+          "title": "Lunch",
+          "readyInMinutes": 30,
+          "calories": 600,
+          "ingredients": ["chicken", "rice", "vegetables"]
+        },
+        {
+          "id": 3,
+          "title": "Dinner",
+          "readyInMinutes": 45,
+          "calories": 500,
+          "ingredients": ["fish", "quinoa", "salad"]
+        }
+      ],
+      "nutrients": {
+        "calories": 2000,
+        "protein": 150,
+        "fat": 80,
+        "carbohydrates": 250,
+        "fiber": 30
+      }
+    }
+  ],
+  "grocery_lists": [
+    {
+      "id": "grocery_list_1",
+      "meal_plan_id": "meal_plan_1",
+      "items": [
+        {"name": "eggs", "quantity": 6, "unit": "pieces", "estimated_cost": 30.0},
+        {"name": "bread", "quantity": 1, "unit": "loaf", "estimated_cost": 25.0},
+        {"name": "chicken", "quantity": 500, "unit": "g", "estimated_cost": 200.0},
+        {"name": "rice", "quantity": 1, "unit": "kg", "estimated_cost": 80.0},
+        {"name": "vegetables", "quantity": 500, "unit": "g", "estimated_cost": 50.0}
+      ],
+      "total_estimated_cost": 385.0,
+      "currency": "INR"
+    }
+  ],
+  "payment_orders": [
+    {
+      "id": "order_pay_123",
+      "amount": 500.0,
+      "currency": "INR",
+      "status": "created",
+      "receipt": "receipt_001",
+      "notes": {"description": "Test payment order"},
+      "created_at": "2024-01-15T10:00:00Z"
+    }
+  ],
+  "payment_links": [
+    {
+      "id": "plink_123",
+      "amount": 1000.0,
+      "currency": "INR",
+      "description": "Test payment link",
+      "reference_id": "ref_001",
+      "short_url": "https://rzp.io/test123",
+      "status": "created",
+      "created_at": "2024-01-15T10:00:00Z"
+    }
+  ],
+  "transcriptions": [
+    {
+      "text": "Order tomatoes and milk",
+      "language": "en",
+      "duration": 5.2,
+      "confidence": 0.95
+    },
+    {
+      "text": "Find flights to Paris",
+      "language": "en",
+      "duration": 3.1,
+      "confidence": 0.92
+    }
+  ]
+}

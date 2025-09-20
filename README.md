@@ -68,6 +68,7 @@ A comprehensive FastAPI-based multi-agent AI system designed to handle complex t
 
 ### Prerequisites
 - Python 3.10+
+- Node.js 18+ (for frontend)
 - uv (recommended) or pip
 
 ### Installation
@@ -82,7 +83,7 @@ A comprehensive FastAPI-based multi-agent AI system designed to handle complex t
    ```bash
    uv sync
    # or with pip
-   pip install -r requirements.txt
+   pip install -e .
    ```
 
 3. **Set up environment variables**
@@ -102,13 +103,26 @@ A comprehensive FastAPI-based multi-agent AI system designed to handle complex t
    ```
 
 4. **Run the application**
+
+   **Option 1: Automated startup (Recommended)**
    ```bash
-   python main.py
-   # or
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+   ./start_dev.sh
    ```
 
-5. **Access the API**
+   **Option 2: Manual startup**
+   ```bash
+   # Backend
+   python main.py
+   
+   # Frontend (in another terminal)
+   cd quickpick_frontend
+   npm install
+   npm run dev
+   ```
+
+5. **Access the application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8000
    - API Documentation: http://localhost:8000/docs
    - Health Check: http://localhost:8000/health
    - System Status: http://localhost:8000/status
@@ -292,23 +306,54 @@ payment_agent.update_payment_preferences(
 
 ```
 Order_Agent/
-├── agents/
+├── agents/                    # Agent implementations
 │   ├── __init__.py
 │   ├── base_agent.py          # Base agent class with common functionality
 │   ├── food_agent.py          # Food domain agent
 │   ├── travel_agent.py        # Travel domain agent
-│   ├── shopping_agent.py      # Shopping domain agent
+│   ├── shopping_agent.py      # Shopping domain agent (includes QuickCommerceAgent)
 │   └── payment_agent.py       # Payment processing agent
-├── master/
+├── master/                    # Master agent coordination
 │   ├── __init__.py
 │   └── master_agent.py        # Central coordinator and router
-├── mcp/
+├── mcp/                       # Model Context Protocol clients
 │   ├── __init__.py
 │   ├── food_api_client.py     # Food API integrations (Spoonacular)
 │   ├── speech_to_text_client.py # Groq Whisper API client
-│   └── razorpay_api_client.py # Razorpay payment gateway client
+│   ├── razorpay_api_client.py # Razorpay payment gateway client
+│   └── quick_commerce_scrapper.py # Quick commerce web scraping
+├── config/                    # Configuration management
+│   ├── __init__.py
+│   └── settings.py            # Application settings and configuration
+├── utils/                     # Utility functions
+│   ├── __init__.py
+│   ├── logger.py              # Logging utilities
+│   └── helpers.py             # Helper functions
+├── tests/                     # Test suite
+│   ├── __init__.py
+│   ├── conftest.py            # Pytest configuration and fixtures
+│   ├── unit/                  # Unit tests
+│   ├── integration/           # Integration tests
+│   ├── e2e/                   # End-to-end tests
+│   ├── fixtures/              # Test data and fixtures
+│   └── mocks/                 # Mock objects
+├── quickpick_frontend/        # React frontend application
+│   ├── src/
+│   │   ├── components/        # React components
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── lib/               # Utility libraries
+│   │   ├── config/            # Frontend configuration
+│   │   └── pages/             # Page components
+│   ├── package.json
+│   └── README.md
 ├── main.py                    # FastAPI application entry point
 ├── pyproject.toml            # Project dependencies and configuration
+├── pytest.ini               # Pytest configuration
+├── run_tests.py              # Test runner script
+├── start_dev.sh              # Development startup script
+├── .gitignore                # Git ignore rules
+├── TESTING.md                # Testing documentation
+├── INTEGRATION_GUIDE.md      # Frontend-backend integration guide
 ├── catalog.json              # Product catalog data
 ├── restaurant.json           # Restaurant data sample
 ├── sample.json               # Sample API request data
@@ -333,6 +378,54 @@ Order_Agent/
 
 ## 🧪 Testing
 
+### Automated Testing
+
+The project includes a comprehensive test suite with unit, integration, and end-to-end tests.
+
+#### Quick Start
+```bash
+# Install test dependencies
+python run_tests.py --install-deps
+
+# Run all tests
+python run_tests.py --all
+
+# Run with coverage
+python run_tests.py --all --coverage
+
+# Run CI pipeline
+python run_tests.py --ci
+```
+
+#### Test Types
+```bash
+# Unit tests
+python run_tests.py --unit
+
+# Integration tests
+python run_tests.py --integration
+
+# End-to-end tests
+python run_tests.py --e2e
+
+# Specific test file
+python run_tests.py --test tests/unit/test_food_agent.py
+```
+
+#### Code Quality
+```bash
+# Run linting
+python run_tests.py --lint
+
+# Format code
+python run_tests.py --format
+
+# Type checking
+python run_tests.py --types
+```
+
+For detailed testing information, see [TESTING.md](TESTING.md).
+
 ### Manual Testing
 ```bash
 # Test food agent
@@ -346,6 +439,9 @@ curl -X POST "http://localhost:8000/test/shopping"
 
 # Test payment agent
 curl -X POST "http://localhost:8000/test/payment"
+
+# Test quick commerce
+curl -X POST "http://localhost:8000/test/quick-commerce"
 ```
 
 ### API Testing
@@ -752,13 +848,6 @@ For support and questions:
 - Review the test endpoints for examples
 - Check the logs for debugging information
 
-## 🙏 Acknowledgments
-
-- FastAPI for the excellent web framework
-- Pydantic for data validation and serialization
-- Razorpay for payment processing capabilities
-- Groq for Whisper API integration
-- The open-source community for inspiration and tools
 
 ## 🔍 Troubleshooting
 
