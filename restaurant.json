@@ -1,0 +1,240 @@
+{
+  "location_id": "1389538",
+  "name": "Time Traveller",
+  "latitude": "12.824636",
+  "longitude": "77.68114",
+  "num_reviews": "2612",
+  "timezone": "Asia/Kolkata",
+  "location_string": "Bengaluru, Bangalore District, Karnataka",
+  "photo": {
+    "images": {
+      "small": {
+        "width": "150",
+        "url": "https://media-cdn.tripadvisor.com/media/photo-l/14/96/fa/14/restaurant.jpg",
+        "height": "150"
+      },
+      "thumbnail": {
+        "width": "50",
+        "url": "https://media-cdn.tripadvisor.com/media/photo-t/14/96/fa/14/restaurant.jpg",
+        "height": "50"
+      },
+      "original": {
+        "width": "1200",
+        "url": "https://media-cdn.tripadvisor.com/media/photo-o/14/96/fa/14/restaurant.jpg",
+        "height": "801"
+      },
+      "large": {
+        "width": "1024",
+        "url": "https://media-cdn.tripadvisor.com/media/photo-w/14/96/fa/14/restaurant.jpg",
+        "height": "684"
+      },
+      "medium": {
+        "width": "550",
+        "url": "https://media-cdn.tripadvisor.com/media/photo-s/14/96/fa/14/restaurant.jpg",
+        "height": "367"
+      }
+    },
+    "is_blessed": true,
+    "uploaded_date": "2018-09-12T00:53:34-0400",
+    "caption": "Restaurant ",
+    "id": "345438740",
+    "helpful_votes": "24",
+    "published_date": "2018-09-12T00:53:34-0400",
+    "user": {
+      "user_id": null,
+      "member_id": "0",
+      "type": "user"
+    }
+  },
+  "api_detail_url": "https://api.tripadvisor.com/api/internal/1.14/location/1389538",
+  "awards": [],
+  "doubleclick_zone": "as.india.karnataka.bangalore",
+  "preferred_map_engine": "default",
+  "raw_ranking": "4.953149318695068",
+  "ranking_geo": "Bengaluru",
+  "ranking_geo_id": "297628",
+  "ranking_position": "1",
+  "ranking_denominator": "4861",
+  "ranking_category": "restaurant",
+  "ranking": "#1 of 9,327 Restaurants in Bengaluru",
+  "distance": null,
+  "distance_string": null,
+  "bearing": null,
+  "rating": "4.9",
+  "is_closed": false,
+  "open_now_text": "Open Now",
+  "is_long_closed": false,
+  "price_level": "$$ - $$$",
+  "price": "$600",
+  "ride_providers": [
+    "olaCabs"
+  ],
+  "description": "Time Traveller offers an eclectic buffet & an a la carte menu with dishes from across the globe. The buffet for lunch & dinner features over 12 salads, soup selections, 18 main course dishes & over a dozen desserts. Some of the dishes featured in the menu span from Greece, Mexico, The Orient, Europe, Morocco\u2026 etc all. Our live counter is a must try!",
+  "web_url": "https://www.tripadvisor.com/Restaurant_Review-g297628-d1389538-Reviews-Time_Traveller-Bengaluru_Bangalore_District_Karnataka.html",
+  "write_review": "https://www.tripadvisor.com/UserReview-g297628-d1389538-Time_Traveller-Bengaluru_Bangalore_District_Karnataka.html",
+  "ancestors": [
+    {
+      "subcategory": [
+        {
+          "key": "city",
+          "name": "City"
+        }
+      ],
+      "name": "Bengaluru",
+      "abbrv": null,
+      "location_id": "297628"
+    },
+    {
+      "subcategory": [
+        {
+          "key": "district",
+          "name": "District"
+        }
+      ],
+      "name": "Bangalore District",
+      "abbrv": null,
+      "location_id": "12392950"
+    },
+    {
+      "subcategory": [
+        {
+          "key": "state",
+          "name": "State"
+        }
+      ],
+      "name": "Karnataka",
+      "abbrv": null,
+      "location_id": "297627"
+    },
+    {
+      "subcategory": [
+        {
+          "key": "country",
+          "name": "Country"
+        }
+      ],
+      "name": "India",
+      "abbrv": null,
+      "location_id": "293860"
+    }
+  ],
+  "category": {
+    "key": "restaurant",
+    "name": "Restaurant"
+  },
+  "subcategory": [
+    {
+      "key": "sit_down",
+      "name": "Sit down"
+    }
+  ],
+  "parent_display_name": "Bengaluru",
+  "is_jfy_enabled": false,
+  "nearest_metro_station": [],
+  "phone": "+91 80 4040 0400",
+  "website": "https://www.instagram.com/timetravellersaivishram/?hl=e",
+  "address_obj": {
+    "street1": "144 - C/1 Kirloskar Rd",
+    "street2": "Ground Floor, Sai Vishram Business Hotel",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "postalcode": "560099"
+  },
+  "address": "144 - C/1 Kirloskar Rd Ground Floor, Sai Vishram Business Hotel, Bengaluru 560099 India",
+  "hours": {
+    "week_ranges": [
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ],
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ],
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ],
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ],
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ],
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ],
+      [
+        {
+          "open_time": 420,
+          "close_time": 1350
+        }
+      ]
+    ],
+    "timezone": "Asia/Kolkata"
+  },
+  "is_candidate_for_contact_info_suppression": false,
+  "cuisine": [
+    {
+      "key": "10346",
+      "name": "Indian"
+    },
+    {
+      "key": "10659",
+      "name": "Asian"
+    },
+    {
+      "key": "10648",
+      "name": "International"
+    },
+    {
+      "key": "10665",
+      "name": "Vegetarian friendly"
+    },
+    {
+      "key": "10697",
+      "name": "Vegan options"
+    },
+    {
+      "key": "10992",
+      "name": "Gluten free options"
+    }
+  ],
+  "dietary_restrictions": [
+    {
+      "key": "10665",
+      "name": "Vegetarian friendly"
+    },
+    {
+      "key": "10697",
+      "name": "Vegan options"
+    },
+    {
+      "key": "10992",
+      "name": "Gluten free options"
+    }
+  ],
+  "gb_distance": "Bengaluru",
+  "establishment_types": [
+    {
+      "key": "10591",
+      "name": "Restaurants"
+    }
+  ]
+}

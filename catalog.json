@@ -1,0 +1,58 @@
+[
+  {
+    "jpin": "123456",
+    "title": "Muskmelon (Honey Dew)",
+    "aliases": ["muskmelon", "honey dew", "honeydew melon", "cantaloupe"],
+    "mrp": 100,
+    "sp": 90
+  },
+  {
+    "jpin": "789012",
+    "title": "Mango, 1Kg",
+    "aliases": ["mango", "mangoes", "aam"],
+    "mrp": 120,
+    "sp": 100
+  },
+  {
+    "jpin": "345678",
+    "title": "Apple, 1Kg",
+    "aliases": ["apple", "apples", "seb"],
+    "mrp": 150,
+    "sp": 130
+  },
+  {
+    "jpin": "901234",
+    "title": "Banana, 1Kg",
+    "aliases": ["banana", "bananas", "kela"],
+    "mrp": 60,
+    "sp": 50
+  },
+  {
+    "jpin": "567890",
+    "title": "Tomato, 1Kg",
+    "aliases": ["tomato", "tomatoes", "tamatar"],
+    "mrp": 40,
+    "sp": 35
+  },
+  {
+    "jpin": "234567",
+    "title": "Onion, 1Kg",
+    "aliases": ["onion", "onions", "pyaz"],
+    "mrp": 30,
+    "sp": 25
+  },
+  {
+    "jpin": "890123",
+    "title": "Potato, 1Kg",
+    "aliases": ["potato", "potatoes", "aloo"],
+    "mrp": 25,
+    "sp": 20
+  },
+  {
+    "jpin": "456789",
+    "title": "Carrot, 1Kg",
+    "aliases": ["carrot", "carrots", "gajar"],
+    "mrp": 35,
+    "sp": 30
+  }
+] 

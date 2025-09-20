@@ -1,0 +1,525 @@
+{
+    "state": "completed",
+    "name": "ubereats-scraper-queue",
+    "data": {
+        "scraper": {
+            "maxRows": 1,
+            "query": "Pizza",
+            "address": "1600 Pennsylvania Avenue, Washington DC",
+            "locale": "en-US",
+            "page": 2
+        }
+    },
+    "id": "ffpfljmrtb1osgvd73e81183",
+    "progress": 0,
+    "returnvalue": {
+        "hasMorePage": true,
+        "currentPage": 2,
+        "data": [
+            {
+                "title": "Nick's Riverside Grill",
+                "sanitizedTitle": "Nick's Riverside Grill",
+                "phoneNumber": "+12023423535",
+                "cuisineList": [
+                    "Burgers",
+                    "American",
+                    "Sandwiches"
+                ],
+                "location": {
+                    "address": "3050 K St Nw, Washington, DC 20007",
+                    "streetAddress": "3050 K St NW",
+                    "city": "Washington",
+                    "country": "US",
+                    "postalCode": "20007",
+                    "region": "DC",
+                    "latitude": 38.90170155399803,
+                    "longitude": -77.06034740886413,
+                    "geo": {
+                        "city": "washington-dc",
+                        "country": "us",
+                        "neighborhood": "georgetown-washington-dc",
+                        "region": "dc"
+                    },
+                    "locationType": "STANDALONE_VIRTUAL"
+                },
+                "currencyCode": "USD",
+                "rating": {
+                    "ratingValue": 4.8,
+                    "reviewCount": "22"
+                },
+                "storeAvailablityStatus": "AVAILABLE",
+                "isOpen": true,
+                "closedMessage": "",
+                "etaRange": "Delivered in 57 to 57 min",
+                "hours": [
+                    {
+                        "dayRange": "Every Day",
+                        "sectionHours": [
+                            {
+                                "startTime": 660,
+                                "endTime": 1290,
+                                "sectionTitle": ""
+                            }
+                        ]
+                    }
+                ],
+                "categories": [
+                    "$",
+                    "Burgers",
+                    "American",
+                    "Sandwiches"
+                ],
+                "categoriesLink": [
+                    {
+                        "text": "Burgers"
+                    },
+                    {
+                        "text": "American",
+                        "link": "/us/category/washington-dc/american"
+                    },
+                    {
+                        "text": "Sandwiches"
+                    }
+                ],
+                "menu": [
+                    {
+                        "catalogSectionUUID": "366cd143-2ee4-5ae6-bf3b-de69b6493579",
+                        "catalogName": "Starters",
+                        "catalogItems": [
+                            {
+                                "uuid": "b57cb3ce-51cf-55dc-b869-44c79e7d0391",
+                                "title": "NACHOS - BEEF",
+                                "titleBadge": "NACHOS - BEEF",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/dfc6552241ef5d7832905a427753be15/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "sour cream, guacamole, jalapeňos, pico, chipotle salsa, cheddar jack cheese  (GF)",
+                                "price": 1900,
+                                "priceTagline": "$19.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$19.00"
+                            },
+                            {
+                                "uuid": "bb87f149-af7d-5ac5-adb8-ad7acaee3d09",
+                                "title": "CHICKEN WINGS",
+                                "titleBadge": "CHICKEN WINGS",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/6adc69760a60778525c75c0cd7a713e5/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "Old Bay, General Tso's or Buffalo style, celery, blue cheese  (GF)",
+                                "price": 1800,
+                                "priceTagline": "$18.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "endorsement": "Popular",
+                                "labelPrimary": "$18.00"
+                            },
+                            {
+                                "uuid": "224a8239-a49f-5b58-9355-e096500f66aa",
+                                "title": "RED CHILI",
+                                "titleBadge": "RED CHILI",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/5461803716b6468b475f9d5563903421/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "all beef, kidney beans, sour cream, cheddar, tortilla chips (GF)",
+                                "price": 1200,
+                                "priceTagline": "$12.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$12.00"
+                            },
+                            {
+                                "uuid": "30accc32-d04d-54a5-8bb2-9de928fa82c2",
+                                "title": "CRISPY FRIED BRUSSELS SPROUTS",
+                                "titleBadge": "CRISPY FRIED BRUSSELS SPROUTS",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/3d52cdaaa3cc60a9c252ac51afeab6d9/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "rosemary, parmesan, chipotle mayo",
+                                "price": 1400,
+                                "priceTagline": "$14.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$14.00"
+                            },
+                            {
+                                "uuid": "0e958662-c569-5c5e-95e1-9c47721be2cb",
+                                "title": "PRINCE EDWARD ISLAND MUSSELS",
+                                "titleBadge": "PRINCE EDWARD ISLAND MUSSELS",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/acad02e983038ab21e73b98435918e8a/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "spicy - wine, garlic butter, shaved fennel, baguette",
+                                "price": 1900,
+                                "priceTagline": "$19.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$19.00"
+                            },
+                            {
+                                "uuid": "afd4a1df-1565-526e-b1be-2286c4da9d83",
+                                "title": "TENDERS & TOTS",
+                                "titleBadge": "TENDERS & TOTS",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/a5123bb1e5bbf851081028b715c15c4d/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "BBQ Sauce",
+                                "price": 1600,
+                                "priceTagline": "$16.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$16.00"
+                            },
+                            {
+                                "uuid": "2585504a-4270-5508-a7fa-d51df4c10668",
+                                "title": "CRISPY FRIED CALAMARI",
+                                "titleBadge": "CRISPY FRIED CALAMARI",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/f8de9aad17a228dd7417dfc43f52ddc1/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "charred poblano aioli",
+                                "price": 1800,
+                                "priceTagline": "$18.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$18.00"
+                            },
+                            {
+                                "uuid": "a1a6e717-81fa-5e8f-841f-89bc3880cdf5",
+                                "title": "NACHOS - CHICKEN",
+                                "titleBadge": "NACHOS - CHICKEN",
+                                "itemDescription": "sour cream, guacamole, jalapeňos, pico, chipotle salsa, cheddar jack cheese  (GF)",
+                                "price": 1900,
+                                "priceTagline": "$19.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$19.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 1
+                    },
+                    {
+                        "catalogSectionUUID": "23844f4e-3775-56ad-902b-918438e07f0b",
+                        "catalogName": "Salads",
+                        "catalogItems": [
+                            {
+                                "uuid": "c0f44f52-8be9-584f-a142-eaf38a3eee4f",
+                                "title": "CAESAR",
+                                "titleBadge": "CAESAR",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/4d1b7d51d22b7a0ee4a75127bcfe43f0/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "parmesan cheese, creamy caesar dressing, croutons(GF) no croutons",
+                                "price": 1400,
+                                "priceTagline": "$14.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "labelPrimary": "$14.00"
+                            },
+                            {
+                                "uuid": "b1602b29-e813-5f10-9258-97f0f03d712a",
+                                "title": "CHOPPED ITALIAN SALAD",
+                                "titleBadge": "CHOPPED ITALIAN SALAD",
+                                "itemDescription": "romaine, salami, capicola, fresh mozzarella, roasted peppers, banana peppers, grape tomatoes, red onion, black olives, creamy Italian dressing",
+                                "price": 1700,
+                                "priceTagline": "$17.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$17.00"
+                            },
+                            {
+                                "uuid": "371733f3-0782-5526-a430-efd49f8dbffa",
+                                "title": "WATERFRONT HOUSE",
+                                "titleBadge": "WATERFRONT HOUSE",
+                                "itemDescription": "mixed greens, cucumber, cherry tomatoes, goat cheese, radish, red wine vinaigrette(GF)",
+                                "price": 1400,
+                                "priceTagline": "$14.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "labelPrimary": "$14.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 2
+                    },
+                    {
+                        "catalogSectionUUID": "3743c624-f534-592f-b705-3b7e17b06854",
+                        "catalogName": "Pizza",
+                        "catalogItems": [
+                            {
+                                "uuid": "ddea80c5-3598-5e2b-a992-e1fc19582655",
+                                "title": "MARGHERITA PIZZA",
+                                "titleBadge": "MARGHERITA PIZZA",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/620255291828dd39b3b8d69811767254/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "tomato sauce, basil, cherry tomatoes, mozzarella, parmesan, provolone",
+                                "price": 1900,
+                                "priceTagline": "$19.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "endorsement": "Popular",
+                                "labelPrimary": "$19.00"
+                            },
+                            {
+                                "uuid": "a7b07854-a7d8-586f-9b17-cd010d332e2f",
+                                "title": "FENNEL SAUSAGE",
+                                "titleBadge": "FENNEL SAUSAGE",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/cfc5525e065781f425c5648f0fe9765b/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "pork sausage, tomato sauce, mozzarella, parmesan, provolone",
+                                "price": 2000,
+                                "priceTagline": "$20.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$20.00"
+                            },
+                            {
+                                "uuid": "f59acba9-c3f5-58b2-b8a4-1ef1ccc7da3e",
+                                "title": "PEPPERONI",
+                                "titleBadge": "PEPPERONI",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/de213a7dec98bad7d4f1f0ec5fc3c30b/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "beef & pork, tomato sauce, mozzarella, parmesan, provolone",
+                                "price": 2000,
+                                "priceTagline": "$20.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$20.00"
+                            },
+                            {
+                                "uuid": "b4e5dcdd-3dfd-5cdc-9372-c42d9d65ea90",
+                                "title": "SHRIMP SCAMPI",
+                                "titleBadge": "SHRIMP SCAMPI",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/c02732b1609ee9aa04c0a88a5206b63f/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "tomato sauce, basil, cherry tomatoes, mozzarella, parmesan, provolone",
+                                "price": 2400,
+                                "priceTagline": "$24.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$24.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 3
+                    },
+                    {
+                        "catalogSectionUUID": "ebf28716-38f1-5076-b5f0-3663aed5390b",
+                        "catalogName": "TACOS",
+                        "catalogItems": [
+                            {
+                                "uuid": "a4670940-3d36-566f-8bc8-e4adca7b52ec",
+                                "title": "AL PASTOR SHRIMP (2)",
+                                "titleBadge": "AL PASTOR SHRIMP (2)",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/9208a35915d71b0053643c44867eb1d7/0fb376d1da56c05644450062d25c5c84.jpeg",
+                                "itemDescription": "cabbage, corn & cilantro slaw, pineapple, achote BBQ sauce",
+                                "price": 2100,
+                                "priceTagline": "$21.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$21.00"
+                            },
+                            {
+                                "uuid": "e2d3e2a1-77b6-5160-b2f4-ed0cad26ef87",
+                                "title": "BLACKENED MAHI MAHI (2)",
+                                "titleBadge": "BLACKENED MAHI MAHI (2)",
+                                "itemDescription": "cabbage, corn & cilantro slaw, charred poblano aioli",
+                                "price": 2100,
+                                "priceTagline": "$21.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$21.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 4
+                    },
+                    {
+                        "catalogSectionUUID": "acae1509-7ac7-5b92-836c-cdd2f920167c",
+                        "catalogName": "BURGERS",
+                        "catalogItems": [
+                            {
+                                "uuid": "d9b603bd-d5a5-5fc4-937a-52f20d02cbd0",
+                                "title": "BISON BURGER",
+                                "titleBadge": "BISON BURGER",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/c48b733d9a2cb39db406527829b13ad4/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "peppercorn crusted, cheddar pub cheese, lettuce, tomato, pickle, crinkle cut fries and slaw",
+                                "price": 2200,
+                                "priceTagline": "$22.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "labelPrimary": "$22.00"
+                            },
+                            {
+                                "uuid": "e0d39896-2e6d-5dfb-97cd-c2d6e72dd167",
+                                "title": "DOUBLE SMASH BURGER",
+                                "titleBadge": "DOUBLE SMASH BURGER",
+                                "itemDescription": "caramelized onions, american cheese, crinkle cut fries and slaw",
+                                "price": 2000,
+                                "priceTagline": "$20.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "endorsement": "Popular",
+                                "labelPrimary": "$20.00"
+                            },
+                            {
+                                "uuid": "c35edf8c-5feb-5e36-87e6-ff7b99df34d6",
+                                "title": "TURKEY BURGER",
+                                "titleBadge": "TURKEY BURGER",
+                                "itemDescription": "guacamole, lettuce, tomato, pickle",
+                                "price": 1800,
+                                "priceTagline": "$18.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "labelPrimary": "$18.00"
+                            },
+                            {
+                                "uuid": "3f76ddd3-3a3c-591e-9c74-e25674f62b63",
+                                "title": "BLACK BEAN VEGGIE BURGER",
+                                "titleBadge": "BLACK BEAN VEGGIE BURGER",
+                                "itemDescription": "cheddar jack cheese & jalapeňo tostada, lettuce, chipotle mayo, crinkle cut fries and slaw",
+                                "price": 1600,
+                                "priceTagline": "$16.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": true,
+                                "labelPrimary": "$16.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 5
+                    },
+                    {
+                        "catalogSectionUUID": "bfdb1016-c2ed-5f42-af7b-14e5feae3bdd",
+                        "catalogName": "SANDWICHES",
+                        "catalogItems": [
+                            {
+                                "uuid": "7ed8a5d0-a16b-5a14-9f60-653e11a4a335",
+                                "title": "SMOKED TURKEY",
+                                "titleBadge": "SMOKED TURKEY",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/fe9a9a2a9a32403c6e302ae223505d81/0fb376d1da56c05644450062d25c5c84.jpeg",
+                                "itemDescription": "smashed avocado, alfalfa sprouts, red pepper relish, poppy seed onion roll",
+                                "price": 1900,
+                                "priceTagline": "$19.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$19.00"
+                            },
+                            {
+                                "uuid": "dc4e7495-a39d-5002-8eb3-305b9c5473e8",
+                                "title": "JUMBO LUMP CRAB CAKE",
+                                "titleBadge": "JUMBO LUMP CRAB CAKE",
+                                "itemDescription": "lettuce, tomato, pickle, tartar sauce, brioche",
+                                "price": 2800,
+                                "priceTagline": "$28.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$28.00"
+                            },
+                            {
+                                "uuid": "b6c964a4-b7b1-527c-af98-24d0ecf2a3d6",
+                                "title": "CRISPY FRIED CHICKEN",
+                                "titleBadge": "CRISPY FRIED CHICKEN",
+                                "itemDescription": "tomato, lettuce, chipotle mayo, brioche",
+                                "price": 1900,
+                                "priceTagline": "$19.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$19.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 6
+                    },
+                    {
+                        "catalogSectionUUID": "9dd142af-5b63-52ae-a144-2565d0231f6b",
+                        "catalogName": "PLATES",
+                        "catalogItems": [
+                            {
+                                "uuid": "25b7ce39-a4af-5c02-9926-cfc36d8d4f82",
+                                "title": "Maryland Style Crab Cake Single",
+                                "titleBadge": "Maryland Style Crab Cake Single",
+                                "imageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/34616e11b6d4a9a305bf47341db684e2/a19bb09692310dfd41e49a96c424b3a6.jpeg",
+                                "itemDescription": "broccoli, carrots, fingerling potatoes, slaw, tartar",
+                                "price": 3200,
+                                "priceTagline": "$32.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$32.00"
+                            },
+                            {
+                                "uuid": "3d0eb58e-ee17-5607-bf34-ed484014d77e",
+                                "title": "Maryland Style Crab Cakes Double",
+                                "titleBadge": "Maryland Style Crab Cakes Double",
+                                "itemDescription": "broccoli, carrots, fingerling potatoes, slaw, tartar",
+                                "price": 5500,
+                                "priceTagline": "$55.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$55.00"
+                            },
+                            {
+                                "uuid": "5a3f8356-6cc2-5a3a-8d09-eb495122c20b",
+                                "title": "10 oz. NY STRIP STEAK",
+                                "titleBadge": "10 oz. NY STRIP STEAK",
+                                "itemDescription": "Sautéed garlic mushrooms, grilled tomato, French fries",
+                                "price": 4500,
+                                "priceTagline": "$45.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "labelPrimary": "$45.00"
+                            },
+                            {
+                                "uuid": "670338de-9e02-5c8d-b900-2275231729e2",
+                                "title": "ATLANTIC SALMON FILET",
+                                "titleBadge": "ATLANTIC SALMON FILET",
+                                "itemDescription": "honey soy glaze, pesto aioli",
+                                "price": 3000,
+                                "priceTagline": "$30.00",
+                                "isSoldOut": false,
+                                "isAvailable": true,
+                                "hasCustomizations": false,
+                                "endorsement": "Popular",
+                                "labelPrimary": "$30.00"
+                            }
+                        ],
+                        "catalogSectionPosition": 7
+                    }
+                ],
+                "heroImageUrl": "https://tb-static.uber.com/prod/image-proc/processed_images/41ad3e42fdfdfe664e851c0e7d47a7a1/fb86662148be855d931b37d6c1e5fcbe.jpeg",
+                "uuid": "84a8774a-cc70-4fa2-9c63-2b85e2d50f44",
+                "url": "https://ubereats.com/us/store/nicks-riverside-grill/hKh3SsxwT6KcYyuF4tUPRA",
+                "distance": {
+                    "text": "4.5 mi",
+                    "accessibilityText": "4.5 miles"
+                },
+                "supportedDiningModes": [
+                    {
+                        "mode": "DELIVERY",
+                        "title": "Delivery",
+                        "isAvailable": true,
+                        "isSelected": true
+                    },
+                    {
+                        "mode": "PICKUP",
+                        "title": "Pickup",
+                        "isAvailable": true,
+                        "isSelected": false
+                    }
+                ],
+                "storeReviews": [],
+                "featuredReviews": []
+            }
+        ]
+    },
+    "delay": 0,
+    "priority": 0,
+    "attemptsStarted": 1,
+    "attemptsMade": 1,
+    "stalledCounter": 0,
+    "timestamp": 1750354611479,
+    "finishedOn": 1750354617407,
+    "processedOn": 1750354611480
+}
