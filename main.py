@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 import logging
 import json
 from datetime import datetime
@@ -78,6 +78,17 @@ class PaymentLinkRequest(BaseModel):
     description: str = ""
     reference_id: Optional[str] = None
 
+class QuickOrderRequest(BaseModel):
+    items: List[str]
+    user_id: Optional[str] = "default_user"
+    delivery_preference: Optional[str] = "fastest"  # fastest, cheapest, best_rated
+    auto_approve: Optional[bool] = False
+
+class OrderApprovalRequest(BaseModel):
+    order_id: str
+    approved: bool
+    user_id: Optional[str] = "default_user"
+
 @app.get("/")
 async def root():
     """Root endpoint with system information"""
@@ -88,6 +99,9 @@ async def root():
         "endpoints": {
             "/assistant": "POST - Main assistant endpoint",
             "/speech-to-text": "POST - Speech to text conversion",
+            "/quick-order": "POST - Quick commerce order with price comparison",
+            "/quick-order/approve": "POST - Approve pending quick order",
+            "/quick-order/status": "GET - Check order status",
             "/payment/create-order": "POST - Create payment order",
             "/payment/verify": "POST - Verify payment",
             "/payment/create-link": "POST - Create payment link",
@@ -404,6 +418,129 @@ async def test_payment_agent():
         
     except Exception as e:
         logger.error(f"Error in payment agent test: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Test failed: {str(e)}")
+
+@app.post("/quick-order")
+async def quick_order(request: QuickOrderRequest):
+    """
+    Quick commerce order endpoint with automatic price comparison
+    
+    This endpoint:
+    1. Compares prices across Zepto, Blinkit, Swiggy Instamart, BigBasket
+    2. Shows best option to user
+    3. Optionally places order automatically
+    """
+    try:
+        logger.info(f"Quick order request: {request.items}")
+        
+        # Process through MasterAgent with quick commerce intent
+        response = await master_agent.process({
+            "message": f"Order {' '.join(request.items)}",
+            "user_id": request.user_id,
+            "context": {
+                "delivery_preference": request.delivery_preference,
+                "auto_approve": request.auto_approve
+            }
+        })
+        
+        return {
+            "status": "success",
+            "data": response,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in quick order: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Quick order failed: {str(e)}")
+
+@app.post("/quick-order/approve")
+async def approve_quick_order(request: OrderApprovalRequest):
+    """
+    Approve a pending quick order
+    
+    This endpoint allows users to approve or reject a pending order
+    """
+    try:
+        logger.info(f"Order approval request: {request.order_id} - {request.approved}")
+        
+        if request.approved:
+            # Process the approved order
+            response = await master_agent.process({
+                "message": f"Approve order {request.order_id}",
+                "user_id": request.user_id,
+                "context": {
+                    "order_id": request.order_id,
+                    "action": "approve"
+                }
+            })
+        else:
+            # Cancel the order
+            response = await master_agent.process({
+                "message": f"Cancel order {request.order_id}",
+                "user_id": request.user_id,
+                "context": {
+                    "order_id": request.order_id,
+                    "action": "cancel"
+                }
+            })
+        
+        return {
+            "status": "success",
+            "data": response,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in order approval: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Order approval failed: {str(e)}")
+
+@app.get("/quick-order/status/{order_id}")
+async def get_order_status(order_id: str, user_id: str = "default_user"):
+    """
+    Get order status and tracking information
+    
+    This endpoint provides real-time order tracking
+    """
+    try:
+        logger.info(f"Order status request: {order_id}")
+        
+        response = await master_agent.process({
+            "message": f"Check status of order {order_id}",
+            "user_id": user_id,
+            "context": {
+                "order_id": order_id,
+                "action": "status_check"
+            }
+        })
+        
+        return {
+            "status": "success",
+            "data": response,
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting order status: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Status check failed: {str(e)}")
+
+@app.post("/test/quick-commerce")
+async def test_quick_commerce_agent():
+    """Test endpoint for QuickCommerceAgent functionality"""
+    try:
+        test_request = {
+            "message": "Order tomatoes and milk",
+            "user_id": "test_user"
+        }
+        
+        response = await master_agent.process(test_request)
+        return {
+            "test_type": "quick_commerce_agent",
+            "request": test_request,
+            "response": response
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in quick commerce agent test: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Test failed: {str(e)}")
 
 if __name__ == "__main__":

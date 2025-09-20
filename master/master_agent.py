@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agents.food_agent import FoodAgent
 from agents.travel_agent import TravelAgent
-from agents.shopping_agent import ShoppingAgent
+from agents.shopping_agent import ShoppingAgent, QuickCommerceAgent
 from agents.payment_agent import PaymentAgent
 from agents.base_agent import AgentMessage
 
@@ -25,6 +25,7 @@ class MasterAgent:
             "food": FoodAgent(),
             "travel": TravelAgent(),
             "shopping": ShoppingAgent(),
+            "quick_commerce": QuickCommerceAgent(),
             "payment": PaymentAgent()
         }
         self.user_context = {}
@@ -102,6 +103,14 @@ class MasterAgent:
             r'\b(find.*product|best.*price|shopping.*list)\b'
         ]
         
+        quick_commerce_patterns = [
+            r'\b(order|get|buy)\s+(tomatoes|milk|bread|eggs|onions|potatoes|rice|dal|vegetables|fruits)\b',
+            r'\b(quick|fast)\s+(delivery|order|grocery)\b',
+            r'\b(zepto|blinkit|swiggy.*instamart|bigbasket)\b',
+            r'\b(10.*min|fifteen.*min|quick.*commerce)\b',
+            r'\b(compare.*prices|best.*deal|cheapest)\b'
+        ]
+        
         payment_patterns = [
             r'\b(pay|payment|razorpay|upi|card|wallet|bank|transfer|refund)\b',
             r'\b(create.*order|verify.*payment|payment.*link|transaction)\b'
@@ -112,12 +121,15 @@ class MasterAgent:
             "food": any(re.search(pattern, message_lower) for pattern in food_patterns),
             "travel": any(re.search(pattern, message_lower) for pattern in travel_patterns),
             "shopping": any(re.search(pattern, message_lower) for pattern in shopping_patterns),
+            "quick_commerce": any(re.search(pattern, message_lower) for pattern in quick_commerce_patterns),
             "payment": any(re.search(pattern, message_lower) for pattern in payment_patterns)
         }
         
-        # Determine primary intent
+        # Determine primary intent (prioritize quick commerce for grocery items)
         primary_intent = None
-        if intents["payment"]:
+        if intents["quick_commerce"]:
+            primary_intent = "quick_commerce"
+        elif intents["payment"]:
             primary_intent = "payment"
         elif intents["food"]:
             primary_intent = "food"
@@ -178,6 +190,16 @@ class MasterAgent:
             else:
                 return "general"
         
+        elif primary_intent == "quick_commerce":
+            if any(word in message_lower for word in ["order", "get", "buy"]) and any(word in message_lower for word in ["tomatoes", "milk", "bread", "eggs", "onions", "potatoes", "rice", "dal", "vegetables", "fruits"]):
+                return "quick_order"
+            elif any(word in message_lower for word in ["compare", "price", "best", "deal"]):
+                return "compare_prices"
+            elif any(word in message_lower for word in ["status", "track", "where"]):
+                return "order_status"
+            else:
+                return "quick_order"
+        
         elif primary_intent == "payment":
             if any(word in message_lower for word in ["create", "order", "payment"]):
                 return "create_order"
@@ -227,6 +249,15 @@ class MasterAgent:
         if quantity_match:
             extracted["travelers"] = int(quantity_match.group(1))
         
+        # Extract grocery items for quick commerce
+        grocery_items = []
+        grocery_keywords = ["tomatoes", "milk", "bread", "eggs", "onions", "potatoes", "rice", "dal", "vegetables", "fruits", "chicken", "fish", "cheese", "butter"]
+        for keyword in grocery_keywords:
+            if keyword in user_message.lower():
+                grocery_items.append(keyword)
+        if grocery_items:
+            extracted["grocery_items"] = grocery_items
+        
         # Extract locations/destinations
         location_patterns = [
             r'(?:to|in|at)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
@@ -255,11 +286,21 @@ class MasterAgent:
         # Route to primary agent
         if primary_intent in self.agents:
             agent = self.agents[primary_intent]
-            request_data = {
-                "type": task_type,
-                "query": context.get("user_message", ""),
-                **extracted_data
-            }
+            
+            # Special handling for quick commerce
+            if primary_intent == "quick_commerce":
+                request_data = {
+                    "type": task_type,
+                    "items": extracted_data.get("grocery_items", []),
+                    "query": context.get("user_message", ""),
+                    **extracted_data
+                }
+            else:
+                request_data = {
+                    "type": task_type,
+                    "query": context.get("user_message", ""),
+                    **extracted_data
+                }
             
             try:
                 response = await agent.process_request(request_data, context)
@@ -355,6 +396,13 @@ class MasterAgent:
                 "Compare prices across multiple vendors",
                 "Look for seasonal sales and discounts",
                 "Check return policies before making purchases"
+            ])
+        elif intent["primary_intent"] == "quick_commerce":
+            recommendations.extend([
+                "Orders are automatically optimized for best price and delivery time",
+                "Set auto-approve threshold for small savings",
+                "Track your orders in real-time",
+                "Consider bulk ordering to save on delivery fees"
             ])
         elif intent["primary_intent"] == "payment":
             recommendations.extend([
