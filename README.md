@@ -1,4 +1,4 @@
-# Multi-Agent AI System 🚀
+# QuickPick Multi-Agent AI System 🚀
 
 A comprehensive FastAPI-based multi-agent AI system designed to handle complex tasks across different life domains. The system features specialized agents for food assistance, travel planning, shopping optimization, and payment processing, all coordinated by a central MasterAgent.
 
