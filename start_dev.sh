@@ -86,7 +86,7 @@ mkdir -p logs
 # Function to start backend
 start_backend() {
     echo -e "${GREEN}🚀 Starting Backend API on http://localhost:8000${NC}"
-    python main.py > logs/backend.log 2>&1 &
+    python3 main.py > logs/backend.log 2>&1 &
     BACKEND_PID=$!
     echo $BACKEND_PID > logs/backend.pid
 }

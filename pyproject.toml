@@ -1,4 +1,4 @@
-[project]
+ [project]
 name = "multi-agent-ai-system"
 version = "0.1.0"
 description = "Multi-agent AI system with FastAPI backend for food, travel, and shopping assistance"
@@ -16,7 +16,7 @@ dependencies = [
     "langgraph>=0.0.20",
     "serpapi>=0.1.5",
     "razorpay>=1.4.0",
-    "mcp[cli]>=1.9.3",
+    "mcp[cli]",
     "selenium>=4.15.0",
     "beautifulsoup4>=4.12.0",
     "aiohttp>=3.9.0",

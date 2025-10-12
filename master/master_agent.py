@@ -11,7 +11,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agents.food_agent import FoodAgent
 from agents.travel_agent import TravelAgent
-from agents.shopping_agent import ShoppingAgent, QuickCommerceAgent
+from agents.shopping_agent import ShoppingAgent
+from agents.quick_commerce_agent import QuickCommerceAgent
 from agents.payment_agent import PaymentAgent
 from agents.base_agent import AgentMessage
 
@@ -20,14 +21,17 @@ logger = logging.getLogger(__name__)
 class MasterAgent:
     """Master agent that coordinates all other agents and handles user requests"""
     
-    def __init__(self):
-        self.agents = {
-            "food": FoodAgent(),
-            "travel": TravelAgent(),
-            "shopping": ShoppingAgent(),
-            "quick_commerce": QuickCommerceAgent(),
-            "payment": PaymentAgent()
-        }
+    def __init__(self, agents: Optional[Dict[str, Any]] = None):
+        if agents:
+            self.agents = agents
+        else:
+            self.agents = {
+                "food": FoodAgent(),
+                "travel": TravelAgent(),
+                "shopping": ShoppingAgent(),
+                "quick_commerce": QuickCommerceAgent(),
+                "payment": PaymentAgent()
+            }
         self.user_context = {}
         self.conversation_history = []
         self.task_queue = []
@@ -89,26 +93,25 @@ class MasterAgent:
         
         # Define intent patterns
         food_patterns = [
-            r'\b(meal|food|recipe|cook|dinner|lunch|breakfast|grocery|ingredient|diet|nutrition)\b',
+            r'\b(meals?|foods?|recipes?|cook|dinner|lunch|breakfast|grocery|ingredients?|diet|nutrition)\b',
             r'\b(plan.*meal|what.*eat|hungry|calorie|healthy)\b'
         ]
         
         travel_patterns = [
-            r'\b(travel|trip|vacation|flight|hotel|booking|destination|itinerary)\b',
+            r'\b(travels?|trips?|vacations?|flights?|hotels?|bookings?|destinations?|itinerary|itineraries)\b',
             r'\b(go.*to|visit.*|book.*flight|find.*hotel)\b'
         ]
         
         shopping_patterns = [
-            r'\b(buy|purchase|shop|product|price|deal|discount|compare|order)\b',
-            r'\b(find.*product|best.*price|shopping.*list)\b'
+            r'\b(buy|purchase|shop|products?|prices?|deals?|discounts?|compare|order)\b',
+            r'\b(find.*product|best.*price|shopping.*list|compare.*prices)\b'
         ]
         
         quick_commerce_patterns = [
             r'\b(order|get|buy)\s+(tomatoes|milk|bread|eggs|onions|potatoes|rice|dal|vegetables|fruits)\b',
             r'\b(quick|fast)\s+(delivery|order|grocery)\b',
             r'\b(zepto|blinkit|swiggy.*instamart|bigbasket)\b',
-            r'\b(10.*min|fifteen.*min|quick.*commerce)\b',
-            r'\b(compare.*prices|best.*deal|cheapest)\b'
+            r'\b(10.*min|fifteen.*min|quick.*commerce)\b'
         ]
         
         payment_patterns = [
@@ -124,6 +127,8 @@ class MasterAgent:
             "quick_commerce": any(re.search(pattern, message_lower) for pattern in quick_commerce_patterns),
             "payment": any(re.search(pattern, message_lower) for pattern in payment_patterns)
         }
+        
+        logger.info(f"Intents detected: {intents}")
         
         # Determine primary intent (prioritize quick commerce for grocery items)
         primary_intent = None

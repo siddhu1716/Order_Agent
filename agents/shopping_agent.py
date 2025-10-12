@@ -40,7 +40,7 @@ class ShoppingAgent(BaseAgent):
         price_range = data.get("price_range", {"min": 0, "max": 1000})
         brand_preferences = data.get("brand_preferences", [])
         
-        # Mock product discovery
+        # Mock product discovery (Amazon, Flipkart, Myntra)
         products = [
             {
                 "id": "prod_001",
@@ -62,7 +62,7 @@ class ShoppingAgent(BaseAgent):
                 "reviews": 890,
                 "features": ["Feature 1", "Feature 2"],
                 "availability": "In Stock",
-                "vendor": "Walmart"
+                "vendor": "Flipkart"
             },
             {
                 "id": "prod_003",
@@ -73,7 +73,7 @@ class ShoppingAgent(BaseAgent):
                 "reviews": 456,
                 "features": ["Feature 1"],
                 "availability": "Limited Stock",
-                "vendor": "Target"
+                "vendor": "Myntra"
             }
         ]
         
@@ -101,7 +101,7 @@ class ShoppingAgent(BaseAgent):
     async def _compare_prices(self, data: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
         """Compare prices across different vendors"""
         product_name = data.get("product_name", "")
-        vendors = data.get("vendors", ["Amazon", "Walmart", "Target", "Best Buy"])
+        vendors = data.get("vendors", ["Amazon", "Flipkart", "Myntra"])
         
         # Mock price comparison
         price_comparison = {
@@ -116,7 +116,7 @@ class ShoppingAgent(BaseAgent):
                     "rating": 4.5
                 },
                 {
-                    "vendor": "Walmart",
+                    "vendor": "Flipkart",
                     "price": 84.99,
                     "shipping": 5.99,
                     "total": 90.98,
@@ -124,20 +124,12 @@ class ShoppingAgent(BaseAgent):
                     "rating": 4.2
                 },
                 {
-                    "vendor": "Target",
+                    "vendor": "Myntra",
                     "price": 92.99,
                     "shipping": 0.0,
                     "total": 92.99,
                     "delivery_time": "1-2 days",
                     "rating": 4.0
-                },
-                {
-                    "vendor": "Best Buy",
-                    "price": 79.99,
-                    "shipping": 0.0,
-                    "total": 79.99,
-                    "delivery_time": "2-4 days",
-                    "rating": 4.3
                 }
             ]
         }
@@ -170,12 +162,12 @@ class ShoppingAgent(BaseAgent):
                     "total_cost": 0,
                     "delivery_time": "2-3 days"
                 },
-                "Walmart": {
+                "Flipkart": {
                     "items": [item for item in items if "household" in item.lower()],
                     "total_cost": 0,
                     "delivery_time": "3-5 days"
                 },
-                "Target": {
+                "Myntra": {
                     "items": [item for item in items if "clothing" in item.lower()],
                     "total_cost": 0,
                     "delivery_time": "1-2 days"
@@ -227,7 +219,7 @@ class ShoppingAgent(BaseAgent):
                 "original_price": 89.99,
                 "sale_price": 59.99,
                 "discount": "33% off",
-                "vendor": "Walmart",
+                "vendor": "Flipkart",
                 "expires": "2024-01-28",
                 "category": "home"
             },
@@ -236,7 +228,7 @@ class ShoppingAgent(BaseAgent):
                 "original_price": 119.99,
                 "sale_price": 89.99,
                 "discount": "25% off",
-                "vendor": "Target",
+                "vendor": "Myntra",
                 "expires": "2024-01-25",
                 "category": "sports"
             }
@@ -331,346 +323,4 @@ class ShoppingAgent(BaseAgent):
         logger.info(f"Updated shopping preferences: vendors={preferred_vendors}, budget={budget_constraints}")
 
 
-class QuickCommerceAgent(ShoppingAgent):
-    """Enhanced ShoppingAgent specialized in quick commerce optimization"""
-    
-    def __init__(self):
-        super().__init__()
-        self.agent_id = "QuickCommerceAgent"
-        self.quick_commerce_platforms = ["zepto", "blinkit", "swiggy_instamart", "bigbasket"]
-        self.order_history = []
-        self.user_preferences = {
-            "delivery_priority": "fastest",  # fastest, cheapest, best_rated
-            "max_delivery_time": 15,  # minutes
-            "preferred_platforms": ["zepto", "blinkit"],
-            "auto_approve_threshold": 50,  # Auto-approve if savings > ₹50
-            "quality_threshold": 4.0  # minimum rating
-        }
-        
-        # Import scraper
-        try:
-            from mcp.quick_commerce_scrapper import QuickCommerceScraper, QuickCommerceOptimizer
-            self.scraper = QuickCommerceScraper()
-            self.optimizer = QuickCommerceOptimizer()
-            logger.info("QuickCommerceAgent initialized with scraper")
-        except ImportError:
-            self.scraper = None
-            self.optimizer = None
-            logger.warning("Quick commerce scraper not available")
-    
-    async def process_request(self, data: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
-        """Process quick commerce requests with enhanced functionality"""
-        request_type = data.get("type", "general")
-        
-        if request_type == "quick_order":
-            return await self._quick_order(data, context)
-        elif request_type == "compare_prices":
-            return await self._compare_prices_quick_commerce(data, context)
-        elif request_type == "place_order":
-            return await self._place_order_automation(data, context)
-        elif request_type == "order_status":
-            return await self._check_order_status(data, context)
-        else:
-            # Fallback to parent class methods
-            return await super().process_request(data, context)
-    
-    async def _quick_order(self, data: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
-        """Step 1: Compare prices and show best option to user"""
-        items = data.get("items", [])
-        user_id = context.get("user_id", "default_user")
-        
-        if not self.scraper:
-            return {
-                "status": "error",
-                "message": "Quick commerce scraper not available",
-                "agent_id": self.agent_id
-            }
-        
-        logger.info(f"QuickCommerceAgent comparing prices for {len(items)} items")
-        
-        # Step 1: Compare prices across platforms
-        comparison_results = await self._compare_prices_across_platforms(items)
-        
-        # Step 2: Find best options
-        best_options = self._find_best_options(comparison_results)
-        
-        # Step 3: Prepare recommendation
-        recommendation = self._prepare_recommendation(best_options, items)
-        
-        # Step 4: Check if auto-approve
-        auto_approve = self._should_auto_approve(recommendation)
-        
-        if auto_approve:
-            # Auto-place order
-            order_result = await self._place_order_automation({
-                "platform": recommendation["best_platform"],
-                "items": recommendation["items"]
-            }, context)
-            
-            return {
-                "status": "success",
-                "data": {
-                    "action": "auto_ordered",
-                    "recommendation": recommendation,
-                    "order_result": order_result,
-                    "time_saved": "20-30 minutes"
-                },
-                "agent_id": self.agent_id
-            }
-        else:
-            # Show recommendation and wait for approval
-            return {
-                "status": "success",
-                "data": {
-                    "action": "awaiting_approval",
-                    "recommendation": recommendation,
-                    "message": "Please approve the order to proceed",
-                    "time_saved": "20-30 minutes"
-                },
-                "agent_id": self.agent_id
-            }
-    
-    async def _compare_prices_across_platforms(self, items: List[str]) -> Dict[str, Any]:
-        """Compare prices across all quick commerce platforms"""
-        comparison_results = {}
-        
-        for platform in self.quick_commerce_platforms:
-            platform_results = {}
-            
-            for item in items:
-                try:
-                    # Use scraper to get product data
-                    products = await self.scraper.search_products(platform, item)
-                    
-                    if products:
-                        # Find best product for this item on this platform
-                        best_product = self._select_best_product_on_platform(products, platform)
-                        platform_results[item] = best_product
-                    else:
-                        platform_results[item] = {
-                            "name": item,
-                            "price": 0,
-                            "rating": 0,
-                            "availability": "Not Available",
-                            "platform": platform
-                        }
-                        
-                except Exception as e:
-                    logger.error(f"Error searching {item} on {platform}: {str(e)}")
-                    platform_results[item] = {
-                        "name": item,
-                        "price": 0,
-                        "rating": 0,
-                        "availability": "Error",
-                        "platform": platform,
-                        "error": str(e)
-                    }
-            
-            comparison_results[platform] = platform_results
-        
-        return comparison_results
-    
-    def _select_best_product_on_platform(self, products: List[Dict], platform: str) -> Dict[str, Any]:
-        """Select best product on a specific platform"""
-        if not products:
-            return {}
-        
-        # Sort by rating first, then by price
-        products.sort(key=lambda x: (x.get("rating", 0), -x.get("price", 0)), reverse=True)
-        
-        best_product = products[0]
-        best_product["platform"] = platform
-        
-        return best_product
-    
-    def _find_best_options(self, comparison_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Find best options across all platforms"""
-        best_options = {}
-        
-        # Get all unique items
-        all_items = set()
-        for platform_results in comparison_results.values():
-            all_items.update(platform_results.keys())
-        
-        for item in all_items:
-            item_options = []
-            
-            for platform, platform_results in comparison_results.items():
-                if item in platform_results and platform_results[item].get("price", 0) > 0:
-                    item_options.append(platform_results[item])
-            
-            if item_options:
-                # Find best option for this item
-                best_option = min(item_options, key=lambda x: x["price"])
-                best_options[item] = best_option
-        
-        return best_options
-    
-    def _prepare_recommendation(self, best_options: Dict[str, Any], requested_items: List[str]) -> Dict[str, Any]:
-        """Prepare recommendation for user"""
-        total_cost = 0
-        platform_breakdown = {}
-        items = []
-        
-        for item, option in best_options.items():
-            if item in requested_items:
-                total_cost += option["price"]
-                platform = option["platform"]
-                
-                if platform not in platform_breakdown:
-                    platform_breakdown[platform] = {
-                        "items": [],
-                        "subtotal": 0,
-                        "delivery_fee": 0 if platform in ["zepto", "blinkit"] else 20,
-                        "delivery_time": 10 if platform in ["zepto", "blinkit"] else 30
-                    }
-                
-                platform_breakdown[platform]["items"].append(option)
-                platform_breakdown[platform]["subtotal"] += option["price"]
-                items.append(option)
-        
-        # Find best platform (most items or lowest cost)
-        best_platform = max(platform_breakdown.keys(), key=lambda x: len(platform_breakdown[x]["items"]))
-        
-        # Calculate total with delivery fees
-        total_with_delivery = sum(
-            breakdown["subtotal"] + breakdown["delivery_fee"] 
-            for breakdown in platform_breakdown.values()
-        )
-        
-        # Calculate savings
-        savings = self._calculate_savings(platform_breakdown)
-        
-        return {
-            "best_platform": best_platform,
-            "total_cost": total_with_delivery,
-            "items": items,
-            "platform_breakdown": platform_breakdown,
-            "savings": savings,
-            "delivery_time": platform_breakdown[best_platform]["delivery_time"],
-            "summary": f"Best option: {best_platform.title()} - ₹{total_with_delivery:.2f} total, {platform_breakdown[best_platform]['delivery_time']} min delivery"
-        }
-    
-    def _calculate_savings(self, platform_breakdown: Dict[str, Any]) -> float:
-        """Calculate potential savings"""
-        if len(platform_breakdown) < 2:
-            return 0
-        
-        costs = [
-            breakdown["subtotal"] + breakdown["delivery_fee"] 
-            for breakdown in platform_breakdown.values()
-        ]
-        
-        if len(costs) > 1:
-            costs.sort()
-            return costs[1] - costs[0]  # Savings compared to second-best option
-        
-        return 0
-    
-    def _should_auto_approve(self, recommendation: Dict[str, Any]) -> bool:
-        """Check if order should be auto-approved"""
-        savings = recommendation.get("savings", 0)
-        auto_approve_threshold = self.user_preferences.get("auto_approve_threshold", 50)
-        
-        return savings >= auto_approve_threshold
-    
-    async def _place_order_automation(self, data: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
-        """Step 3: Place order via headless browser automation"""
-        platform = data.get("platform")
-        items = data.get("items", [])
-        user_id = context.get("user_id", "default_user")
-        
-        if not self.scraper:
-            return {
-                "status": "error",
-                "message": "Order automation not available",
-                "agent_id": self.agent_id
-            }
-        
-        try:
-            # Use scraper's automation capabilities
-            order_result = await self.scraper.place_order(platform, items, user_id)
-            
-            # Track the order
-            if order_result.get("status") == "success":
-                self._track_order(order_result, user_id)
-            
-            logger.info(f"QuickCommerceAgent placed order on {platform}")
-            return {
-                "status": "success",
-                "data": order_result,
-                "agent_id": self.agent_id
-            }
-            
-        except Exception as e:
-            logger.error(f"Error placing order: {str(e)}")
-            return {
-                "status": "error",
-                "message": f"Order placement failed: {str(e)}",
-                "agent_id": self.agent_id
-            }
-    
-    def _track_order(self, order_result: Dict[str, Any], user_id: str):
-        """Track order in history"""
-        order_record = {
-            "order_id": order_result.get("order_id"),
-            "platform": order_result.get("platform"),
-            "user_id": user_id,
-            "items": order_result.get("items", []),
-            "total_amount": order_result.get("total_amount", 0),
-            "order_time": datetime.now().isoformat(),
-            "status": "placed"
-        }
-        
-        self.order_history.append(order_record)
-        
-        # Keep only last 100 orders
-        if len(self.order_history) > 100:
-            self.order_history = self.order_history[-100:]
-    
-    async def _check_order_status(self, data: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
-        """Check order status"""
-        order_id = data.get("order_id")
-        user_id = context.get("user_id", "default_user")
-        
-        # Find order in history
-        order = next(
-            (o for o in self.order_history if o["order_id"] == order_id and o["user_id"] == user_id),
-            None
-        )
-        
-        if not order:
-            return {
-                "status": "error",
-                "message": "Order not found",
-                "agent_id": self.agent_id
-            }
-        
-        # Mock status update
-        order["status"] = "out_for_delivery"
-        order["estimated_delivery"] = "5 minutes"
-        
-        return {
-            "status": "success",
-            "data": {
-                "order": order,
-                "current_status": order["status"]
-            },
-            "agent_id": self.agent_id
-        }
-    
-    def update_quick_commerce_preferences(self, delivery_priority: str = None,
-                                        preferred_platforms: List[str] = None,
-                                        auto_approve_threshold: float = None,
-                                        quality_threshold: float = None):
-        """Update quick commerce preferences"""
-        if delivery_priority:
-            self.user_preferences["delivery_priority"] = delivery_priority
-        if preferred_platforms:
-            self.user_preferences["preferred_platforms"] = preferred_platforms
-        if auto_approve_threshold:
-            self.user_preferences["auto_approve_threshold"] = auto_approve_threshold
-        if quality_threshold:
-            self.user_preferences["quality_threshold"] = quality_threshold
-        
-        logger.info(f"Updated quick commerce preferences: {self.user_preferences}") 
+ 

@@ -195,20 +195,6 @@ def payment_agent(mock_razorpay_client):
 
 
 @pytest.fixture
-def master_agent(food_agent, travel_agent, shopping_agent, quick_commerce_agent, payment_agent):
-    """Create MasterAgent instance for testing."""
-    agent = MasterAgent()
-    agent.agents = {
-        "food": food_agent,
-        "travel": travel_agent,
-        "shopping": shopping_agent,
-        "quick_commerce": quick_commerce_agent,
-        "payment": payment_agent
-    }
-    return agent
-
-
-@pytest.fixture
 def sample_food_request():
     """Sample food request data for testing."""
     return {

@@ -4,6 +4,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,6 +12,7 @@ import logging
 from typing import Dict, Any, List, Optional
 import json
 import time
+from datetime import datetime, timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +50,16 @@ class QuickCommerceScraper:
                     "rating": ".rating",
                     "availability": ".availability"
                 }
+            },
+            "bigbasket": {
+                "base_url": "https://www.bigbasket.com",
+                "search_url": "https://www.bigbasket.com/ps/?q=",
+                "selectors": {
+                    "product_name": ".prod-name, .uiv2-product-name",
+                    "price": ".price, .uiv2-price",
+                    "rating": ".rating, .uiv2-rating",
+                    "availability": ".availability, .uiv2-sold-out"
+                }
             }
         }
         
@@ -58,10 +70,20 @@ class QuickCommerceScraper:
         
         platform_config = self.platforms[platform]
         
-        # Use Selenium for dynamic content
-        products = await self._scrape_with_selenium(platform, query)
-        
-        return products
+        # Try Selenium for dynamic content, fallback to HTTP parsing
+        try:
+            products = await self._scrape_with_selenium(platform, query)
+            if products:
+                return products
+        except Exception as e:
+            logger.warning(f"Selenium path failed for {platform}: {e}")
+
+        try:
+            products = await self._scrape_with_http(platform, query)
+            return products
+        except Exception as e:
+            logger.error(f"HTTP fallback failed for {platform}: {e}")
+            return []
     
     async def _scrape_with_selenium(self, platform: str, query: str) -> List[Dict[str, Any]]:
         """Scrape using Selenium for dynamic content"""
@@ -69,23 +91,30 @@ class QuickCommerceScraper:
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--window-size=1280,800")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36")
         
         driver = webdriver.Chrome(options=chrome_options)
         
         try:
             platform_config = self.platforms[platform]
-            search_url = f"{platform_config['search_url']}?q={query}"
+            # Some sites (bigbasket) expect q appended directly
+            if platform == "bigbasket":
+                search_url = f"{platform_config['search_url']}{query}"
+            else:
+                search_url = f"{platform_config['search_url']}?q={query}"
             
             driver.get(search_url)
             
             # Wait for products to load
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, ".product"))
+            WebDriverWait(driver, 12).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, ".product, .item, .product-card, .uiv2-card"))
             )
             
             # Extract product data
             products = []
-            product_elements = driver.find_elements(By.CSS_SELECTOR, ".product")
+            product_elements = driver.find_elements(By.CSS_SELECTOR, ".product, .item, .product-card, .uiv2-card")
             
             for element in product_elements:
                 try:
@@ -107,6 +136,67 @@ class QuickCommerceScraper:
             
         finally:
             driver.quit()
+
+    async def _scrape_with_http(self, platform: str, query: str) -> List[Dict[str, Any]]:
+        """Scrape using HTTP + BeautifulSoup as a fallback (best-effort)."""
+        platform_config = self.platforms[platform]
+        if platform == "bigbasket":
+            url = f"{platform_config['search_url']}{query}"
+        else:
+            url = f"{platform_config['search_url']}?q={query}"
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+        }
+
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.get(url, timeout=15) as resp:
+                if resp.status != 200:
+                    logger.warning(f"HTTP scrape got status {resp.status} for {platform}")
+                    return []
+                html = await resp.text()
+                soup = BeautifulSoup(html, "html.parser")
+
+                products: List[Dict[str, Any]] = []
+                # Best-effort generic selectors
+                cards = soup.select(".product, .item, .product-card, .uiv2-card, .col-sm-12")
+                for card in cards[:20]:  # limit to avoid huge outputs
+                    try:
+                        name_el = card.select_one(platform_config['selectors']['product_name']) or card.select_one("[class*='name']")
+                        price_el = card.select_one(platform_config['selectors']['price']) or card.select_one("[class*='price']")
+                        rating_el = card.select_one(platform_config['selectors']['rating']) or card.select_one("[class*='rating']")
+                        avail_el = card.select_one(platform_config['selectors']['availability']) or card.select_one("[class*='stock'], [class*='avail']")
+
+                        name = (name_el.get_text(strip=True) if name_el else "")
+                        price_text = (price_el.get_text(strip=True) if price_el else "")
+                        rating_text = (rating_el.get_text(strip=True) if rating_el else "")
+                        availability = (avail_el.get_text(strip=True) if avail_el else "")
+
+                        # Parse price
+                        try:
+                            price = float(''.join(filter(str.isdigit, price_text))) / 100
+                        except Exception:
+                            price = 0.0
+                        # Parse rating
+                        try:
+                            rating = float(rating_text.split()[0]) if rating_text else 0.0
+                        except Exception:
+                            rating = 0.0
+
+                        products.append({
+                            "name": name,
+                            "price": price,
+                            "rating": rating,
+                            "availability": availability,
+                            "platform": platform,
+                            "image_url": "",
+                            "product_url": url
+                        })
+                    except Exception as e:
+                        logger.debug(f"HTTP parse error on {platform}: {e}")
+                        continue
+
+                return products
     
     def _extract_text(self, element, selector: str) -> str:
         """Extract text from element using selector"""

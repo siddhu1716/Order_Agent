@@ -4,6 +4,11 @@ from pydantic import BaseModel
 from typing import Dict, Any, Optional, List
 import logging
 import json
+import os
+import time
+import uuid
+import socket
+from contextlib import closing
 from datetime import datetime
 
 # Import our agents
@@ -13,8 +18,15 @@ from master.master_agent import MasterAgent
 from mcp.speech_to_text_client import GroqWhisperClient
 from mcp.razorpay_api_client import RazorpayAPIClient
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Configure logging (console + file)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+_file_handler = logging.FileHandler('app.log')
+_file_handler.setLevel(logging.INFO)
+_file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+logging.getLogger().addHandler(_file_handler)
 logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
@@ -32,6 +44,21 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Request/response logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    rid = str(uuid.uuid4())
+    logger.info(f"REQ {rid} -> {request.method} {request.url}")
+    start = time.time()
+    try:
+        response = await call_next(request)
+    except Exception:
+        logger.exception(f"REQ {rid} !! Unhandled exception")
+        raise
+    dur_ms = (time.time() - start) * 1000
+    logger.info(f"RES {rid} <- {request.method} {request.url} | {response.status_code} | {dur_ms:.2f}ms")
+    return response
 
 # Initialize MasterAgent
 master_agent = MasterAgent()
@@ -545,4 +572,16 @@ async def test_quick_commerce_agent():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000) 
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "8000"))
+    # Try up to 15 consecutive ports if occupied
+    for _ in range(15):
+        try:
+            with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+                s.bind((host, port))
+                break
+        except OSError:
+            logger.warning(f"Port {port} in use, trying {port+1}")
+            port += 1
+    logger.info(f"Starting server on http://{host}:{port}")
+    uvicorn.run(app, host=host, port=port)
